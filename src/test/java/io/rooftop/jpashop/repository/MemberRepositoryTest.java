@@ -11,7 +11,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.transaction.Transactional;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -25,7 +25,8 @@ public class MemberRepositoryTest {
     @Rollback(value = false)
     public void testMember() {
         // given
-        Member member = Member.builder().name("HERO").build();
+        Member member = new Member();
+        member.setName("HERO");
 
         // when
         Long saveId = memberRepository.save(member);
