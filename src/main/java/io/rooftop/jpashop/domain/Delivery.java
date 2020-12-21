@@ -4,22 +4,21 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter @Setter
 @Entity
-public class Member {
+public class Delivery {
 
     @Id @GeneratedValue
-    @Column(name = "member_id")
+    @Column(name = "delivery_id")
     private Long id;
 
-    private String name;
+    @OneToOne(mappedBy = "delivery", fetch = FetchType.LAZY)
+    private Order order;
 
     @Embedded
     private Address address;
 
-    @OneToMany(mappedBy = "member")
-    private List<Order> orders = new ArrayList<Order>();
+    @Enumerated(EnumType.STRING)
+    private DeliveryStatus status; // READY, COMP
 }
