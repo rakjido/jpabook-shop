@@ -1,7 +1,9 @@
 package io.rooftop.jpashop.service;
 
+import io.rooftop.jpashop.domain.item.Book;
 import io.rooftop.jpashop.domain.item.Item;
 import io.rooftop.jpashop.repository.ItemRepository;
+import io.rooftop.jpashop.web.dto.BookFormDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,6 +22,23 @@ public class ItemService {
         itemRepository.save(item);
         return item.getId();
     }
+
+    @Transactional
+    public void updateItem(Long itemId, BookFormDto param) {
+        Item findItem = itemRepository.findOne(itemId);
+        findItem.setPrice(param.getPrice());
+        findItem.setName(param.getName());
+        findItem.setStockQuantity(param.getStockQuantity());
+    }
+
+//    @Transactional
+//    public Item updateItem(Long itemId, Book param) {
+//        Item findItem = itemRepository.findOne(itemId);
+//        findItem.setPrice(param.getPrice());
+//        findItem.setName(param.getName());
+//        findItem.setStockQuantity(param.getStockQuantity());
+//        return findItem;
+//    }
 
     public List<Item> findItems() {
         return itemRepository.findAll();

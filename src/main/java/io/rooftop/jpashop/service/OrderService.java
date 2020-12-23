@@ -5,6 +5,7 @@ import io.rooftop.jpashop.domain.item.Item;
 import io.rooftop.jpashop.repository.ItemRepository;
 import io.rooftop.jpashop.repository.MemberRepository;
 import io.rooftop.jpashop.repository.OrderRepository;
+import io.rooftop.jpashop.repository.OrderSearch;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -59,8 +60,9 @@ public class OrderService {
      * 검색
      */
 
-//    public List<Order> findOrders(OrderSearch orderSearch) {
-//        return orderRepository.findAll(orderSearch);
-//    }
+    public List<Order> findOrders(OrderSearch orderSearch) {
+        return orderRepository.findAll(orderSearch);
+//        return orderRepository.findAllByString(orderSearch);
+    }
 
 }
