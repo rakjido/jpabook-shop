@@ -104,11 +104,14 @@ public class OrderRepository {
     public List<Order> findAll(OrderSearch orderSearch) {
         QOrder order = QOrder.order;
         QMember member = QMember.member;
+
         BooleanBuilder builder = new BooleanBuilder();
-        if( null != orderSearch.getOrderStatus()) {
+        if(null != orderSearch.getOrderStatus()) {
+            System.out.println("orderStatus condition works");
             builder.and(order.status.eq(orderSearch.getOrderStatus()));
         }
-        if( null != orderSearch.getMemberName()) {
+        if(StringUtils.hasText(orderSearch.getMemberName())) {
+            System.out.println("memberName condition works");
             builder.and(member.name.like(orderSearch.getMemberName()));
         }
 
