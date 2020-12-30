@@ -35,6 +35,8 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation("com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.5.6")
 
+	implementation 'com.fasterxml.jackson.datatype:jackson-datatype-hibernate5'
+
 	implementation group: 'com.querydsl', name: 'querydsl-jpa' // Query DSL 추가
 	implementation group: 'com.querydsl', name: 'querydsl-apt' // Query DSL 추가
 

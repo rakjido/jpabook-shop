@@ -1,10 +1,8 @@
 package io.rooftop.jpashop.repository;
 
 import com.querydsl.core.BooleanBuilder;
-import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import io.rooftop.jpashop.domain.Order;
-import io.rooftop.jpashop.domain.OrderStatus;
 import io.rooftop.jpashop.domain.QMember;
 import io.rooftop.jpashop.domain.QOrder;
 import lombok.RequiredArgsConstructor;
@@ -123,6 +121,15 @@ public class OrderRepository {
                 .limit(1000)
                 .fetch();
     }
+
+    public List<Order> findAllWithMemberDelivery() {
+        return em.createQuery(
+                "select o from Order o" +
+                        " join fetch o.member m " +
+                        " join fetch o.delivery d ", Order.class
+        ).getResultList();
+    }
+
 
 //    public List<Order> findAll(OrderSearch orderSearch) {
 //        QOrder order = QOrder.order;

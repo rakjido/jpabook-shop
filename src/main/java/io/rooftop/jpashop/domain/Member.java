@@ -24,6 +24,7 @@ public class Member {
     private Address address;
 
  //   @JsonIgnore  화면용이 entity에 들어오면 안된다.
+//    @JsonIgnore
     @OneToMany(mappedBy = "member")
     private List<Order> orders = new ArrayList<Order>();
 }

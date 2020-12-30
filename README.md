@@ -39,3 +39,7 @@
 
 ## 05. Controller, Web HTML, QueryDSL 구현
 
+
+## 06. Member API
+
+## 07. Query API Optimization : Lazy Laoding + fetch join
