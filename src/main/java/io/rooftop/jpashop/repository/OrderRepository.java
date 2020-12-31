@@ -6,6 +6,7 @@ import io.rooftop.jpashop.domain.Order;
 import io.rooftop.jpashop.domain.QMember;
 import io.rooftop.jpashop.domain.QOrder;
 import lombok.RequiredArgsConstructor;
+import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
@@ -128,6 +129,28 @@ public class OrderRepository {
                         " join fetch o.member m " +
                         " join fetch o.delivery d ", Order.class
         ).getResultList();
+    }
+
+    public List<Order> findAllWithMemberDelivery(int offset, int limit) {
+        return em.createQuery(
+                "select o from Order o" +
+                        " join fetch o.member m " +
+                        " join fetch o.delivery d ", Order.class)
+                .setFirstResult(offset)
+                .setMaxResults(limit)
+                .getResultList();
+    }
+
+    public List<Order> findAllWithItem() {
+        return em.createQuery(
+                "select distinct o from Order o " +
+                        " join fetch o.member m " +
+                        " join fetch o.delivery d " +
+                        " join fetch o.orderItems oi " +
+                        " join fetch oi.item i", Order.class)
+//                .setFirstResult(1)
+//                .setMaxResults(100)
+                .getResultList();
     }
 
 

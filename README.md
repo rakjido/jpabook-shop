@@ -6,7 +6,7 @@
 * Project : Gradle Project
 * Language : Java
 * Spring boot : 2.1.7.RELEASE
-* Depencencies : Web, Lombok, Devtools, JPA, H2, Mysql, Mustache
+* Depencencies : Web, Lombok, Devtools, JPA, H2, Mysql, Thymeleaf
 ```
 
 ## 02. 요구사항 분석
@@ -43,3 +43,5 @@
 ## 06. Member API
 
 ## 07. Query API Optimization : Lazy Laoding + fetch join
+
+## 08. Collection Query Optimization
