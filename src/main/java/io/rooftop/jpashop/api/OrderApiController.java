@@ -9,6 +9,7 @@ import io.rooftop.jpashop.domain.OrderItem;
 import io.rooftop.jpashop.repository.OrderRepository;
 import io.rooftop.jpashop.repository.OrderSearch;
 import io.rooftop.jpashop.repository.order.query.OrderQueryRepository;
+import io.rooftop.jpashop.service.query.OrderQueryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -49,14 +50,22 @@ public class OrderApiController {
         return result;
     }
 
+//    @GetMapping("/api/v3/orders")
+//    public List<OrderDto> ordersV3() {
+//        List<Order> orders = orderRepository.findAllWithItem();
+//        List<OrderDto> result = orders.stream()
+//                .map(o -> new OrderDto(o)).collect(toList());
+//        return result;
+//    }
+
+    // spring.jpa.open-in-view : false 일 경우
+    private final OrderQueryService orderQueryService;
+
     @GetMapping("/api/v3/orders")
     public List<OrderDto> ordersV3() {
-        List<Order> orders = orderRepository.findAllWithItem();
-        List<OrderDto> result = orders.stream()
-                .map(o -> new OrderDto(o)).collect(toList());
-        return result;
-
+        return orderQueryService.orderV3();
     }
+
 
     // General Best Solution : v3.1 ===============================================
 

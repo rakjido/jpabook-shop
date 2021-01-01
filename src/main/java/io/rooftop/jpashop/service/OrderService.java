@@ -28,7 +28,8 @@ public class OrderService {
     @Transactional
     public Long order(Long memberId, Long itemId, int cout) {
         // 엔티티 조회
-        Member findMember = memberRepository.findOne(memberId);
+//        Member findMember = memberRepository.findOne(memberId);
+        Member findMember = memberRepository.findById(memberId).get();
         Item findItem = itemRepository.findOne(itemId);
 
         // 배송정보 생성

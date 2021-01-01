@@ -45,3 +45,5 @@
 ## 07. Query API Optimization : Lazy Laoding + fetch join
 
 ## 08. Collection Query Optimization
+
+## 09. OSIV, Data JPA, QueryDSL

@@ -1,8 +1,10 @@
 package io.rooftop.jpashop.repository;
 
 import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import io.rooftop.jpashop.domain.Order;
+import io.rooftop.jpashop.domain.OrderStatus;
 import io.rooftop.jpashop.domain.QMember;
 import io.rooftop.jpashop.domain.QOrder;
 import lombok.RequiredArgsConstructor;
@@ -100,28 +102,73 @@ public class OrderRepository {
     /**
      * JPA QueryDSL
      */
+//    public List<Order> findAll(OrderSearch orderSearch) {
+//        QOrder order = QOrder.order;
+//        QMember member = QMember.member;
+//
+//        BooleanBuilder builder = new BooleanBuilder();
+//        if(null != orderSearch.getOrderStatus()) {
+//            System.out.println("orderStatus condition works");
+//            builder.and(order.status.eq(orderSearch.getOrderStatus()));
+//        }
+//        if(StringUtils.hasText(orderSearch.getMemberName())) {
+//            System.out.println("memberName condition works");
+//            builder.and(member.name.like(orderSearch.getMemberName()));
+//        }
+//
+//        return query
+//                .select(order)
+//                .from(order)
+//                .join(order.member, member)
+//                .where(builder)
+//                .limit(1000)
+//                .fetch();
+//    }
+
+
     public List<Order> findAll(OrderSearch orderSearch) {
         QOrder order = QOrder.order;
         QMember member = QMember.member;
-
-        BooleanBuilder builder = new BooleanBuilder();
-        if(null != orderSearch.getOrderStatus()) {
-            System.out.println("orderStatus condition works");
-            builder.and(order.status.eq(orderSearch.getOrderStatus()));
-        }
-        if(StringUtils.hasText(orderSearch.getMemberName())) {
-            System.out.println("memberName condition works");
-            builder.and(member.name.like(orderSearch.getMemberName()));
-        }
-
         return query
                 .select(order)
                 .from(order)
                 .join(order.member, member)
-                .where(builder)
+                .where(statusEq(orderSearch.getOrderStatus()),
+                        nameLike(orderSearch.getMemberName()))
                 .limit(1000)
                 .fetch();
     }
+
+    private BooleanExpression statusEq(OrderStatus statusCond) {
+        if (statusCond == null) {
+            return null;
+        }
+        return QOrder.order.status.eq(statusCond);
+    }
+
+    private BooleanExpression nameLike(String nameCond) {
+        if (!StringUtils.hasText(nameCond)) {
+            return null;
+        }
+        return QMember.member.name.like(nameCond);
+    }
+
+//    private BooleanExpression statusEq(OrderSearch statusCond) {
+//        if(statusCond == null) {
+//            return null;
+//        }
+//        return QOrder.order.status.eq(statusCond);
+//    }
+//
+//    private BooleanExpression nameLike(OrderSearch nameCond) {
+//        QMember member = QMember.member;
+//        if(!StringUtils.hasText(nameCond.getMemberName())) {
+//            return null;
+//        }
+//        return member.name.like(nameCond.getMemberName());
+//    }
+
+
 
     public List<Order> findAllWithMemberDelivery() {
         return em.createQuery(
@@ -154,33 +201,5 @@ public class OrderRepository {
     }
 
 
-//    public List<Order> findAll(OrderSearch orderSearch) {
-//        QOrder order = QOrder.order;
-//        QMember member = QMember.member;
-//        return query
-//                .select(order)
-//                .from(order)
-//                .join(order.member, member)
-//                .where(statusEq(orderSearch),
-//                        nameLike(orderSearch))
-//                .limit(1000)
-//                .fetch();
-//    }
-//
-//    private BooleanExpression statusEq(OrderSearch statusCond) {
-//        QOrder order = QOrder.order;
-//        if(statusCond == null) {
-//            return null;
-//        }
-//        return order.status.eq(statusCond.getOrderStatus());
-//    }
-//
-//    private BooleanExpression nameLike(OrderSearch nameCond) {
-//        QMember member = QMember.member;
-//        if(!StringUtils.hasText(nameCond.getMemberName())) {
-//            return null;
-//        }
-//        return member.name.like(nameCond.getMemberName());
-//    }
 
 }
