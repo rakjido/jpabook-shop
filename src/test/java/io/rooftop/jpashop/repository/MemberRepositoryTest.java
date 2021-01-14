@@ -14,6 +14,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.transaction.Transactional;
 
+import java.util.Optional;
+
 import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
@@ -34,8 +36,8 @@ public class MemberRepositoryTest {
         member.setAddress(address);
 
         // when
-        Long saveId = memberRepository.save(member);
-        Member findMember = memberRepository.findOne(saveId);
+        Member savedMember = memberRepository.save(member);
+        Member findMember = memberRepository.findById(savedMember.getId()).orElse(null);
 
         // then
         Assertions.assertThat(findMember.getId()).isEqualTo(member.getId());
